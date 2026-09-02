@@ -17,7 +17,8 @@ const renderer = new Renderer({
   storyScreen: $("story-screen"), dialogueBox: $("dialogue-box"), dialogue: $("dialogue"),
   speaker: $("speaker"), chapter: $("chapter-label"), choices: $("choices"), tapHint: $("tap-hint"),
   background: $("background"), backgroundA: $("background"), backgroundB: $("background-next"),
-  rainLayer: $("rain-layer"), characterSlots: [...document.querySelectorAll(".character")]
+  rainLayer: $("rain-layer"), eventCgLayer: $("event-cg-layer"), eventCgImage: $("event-cg-image"),
+  characterSlots: [...document.querySelectorAll(".character")]
 });
 const effects = new Effects({ storyScreen: $("story-screen"), rainLayer: $("rain-layer") });
 const audio = new AudioManager();

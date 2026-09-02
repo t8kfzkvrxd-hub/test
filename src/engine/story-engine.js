@@ -77,7 +77,7 @@ export class StoryEngine {
   revealEvent() {
     if (!this.showingEvent) return;
     this.showingEvent = false;
-    this.renderer.revealDialogue();
+    this.renderer.revealDialogue({ keepEventCg: Boolean(this.currentScene?.presentation?.keepEventCgAfterReveal) });
   }
 
   setAuto(enabled) {
