@@ -19,6 +19,7 @@ export class Renderer {
     this.chapter.textContent = scene.chapter || "";
     this.choices.replaceChildren();
     const presentation = scene.presentation || {};
+    this.setEventCg(presentation.eventCg, backgroundPath, presentation.eventPosition);
     const hideDialogue = Boolean(scene.event || presentation.hideDialogue);
     this.dialogueBox.hidden = hideDialogue;
     this.dialogueBox.style.cursor = scene.choices || scene.end ? "default" : "pointer";
@@ -59,11 +60,30 @@ export class Renderer {
     if (event && !camera) this.background.classList.add("event-focus");
   }
 
-  revealDialogue() {
+  revealDialogue({ keepEventCg = false } = {}) {
     this.storyScreen.classList.remove("event-showing");
+    if (!keepEventCg) this.hideEventCg();
     this.dialogueBox.hidden = false;
-    this.tapHint.hidden = false;
+    this.tapHint.hidden = keepEventCg;
     this.animateDialogue();
+  }
+
+  setEventCg(mode, path, position = "center") {
+    if (mode === "show") this.showEventCg(path, position);
+    else if (mode !== "keep") this.hideEventCg();
+  }
+
+  showEventCg(path, position) {
+    this.eventCgImage.src = path;
+    this.eventCgImage.style.objectPosition = position;
+    this.eventCgLayer.style.setProperty("--event-cg-image", `url("${path}")`);
+    this.eventCgLayer.classList.add("is-visible");
+    this.storyScreen.classList.add("event-cg-active");
+  }
+
+  hideEventCg() {
+    this.eventCgLayer.classList.remove("is-visible");
+    this.storyScreen.classList.remove("event-cg-active");
   }
 
   animateDialogue() {
